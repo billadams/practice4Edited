@@ -70,7 +70,7 @@ public class EmployeeManager implements Serializable {
      * 
      * @param searchDate
      * @param searchCriteria
-     * @return ArrayList<Person>
+     * @return a list matching the search criteria
      */
     public ArrayList<Person> searchDB(LocalDate searchDate, String searchCriteria) {
         

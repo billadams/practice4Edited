@@ -189,7 +189,7 @@ public class EmployeeManagerDA {
      * @param Person person
      * @return person
      */
-    public static Person selectPersonByID(Person person) {
+    public static Person selectPersonByID(int id) {
         
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -201,8 +201,19 @@ public class EmployeeManagerDA {
         
         try {
             ps = connection.prepareStatement(query);
-            ps.setInt(1, Integer.parseInt(person.getEmployeeID()));
+            ps.setInt(1, id);
             rs = ps.executeQuery();
+            
+            Person person = null;
+            if (rs.next()) {
+                person = new Person();
+                person.setFirstName(rs.getString("firstName"));
+                person.setMiddleName(rs.getString("middleName"));
+                person.setLastName(rs.getString("lastName"));
+                person.setBirthDate(rs.getDate("birthDate").toLocalDate());
+                person.setHireDate(rs.getDate("hireDate").toLocalDate());
+            }
+            return person;
         }
         catch (SQLException e) {
             System.out.println(e);
@@ -213,8 +224,6 @@ public class EmployeeManagerDA {
             DBUtil.closePreparedStatement(ps);
             pool.freeConnection(connection);
         }
-        
-        return person;
     }
     
     public static int addNewEmployee(Person person) {

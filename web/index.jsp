@@ -19,6 +19,8 @@
         <div class="container">
             <h1>Employee List</h1>
             
+            <h2>${message}</h2>
+            
             <c:choose>
                 <c:when test="${rowcount == 0}">
                     <p>Initial database values have already been added.</p>
